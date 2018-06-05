@@ -12,11 +12,16 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
+  world_msgs
   message_generation
+  cv_bridge
+  image_transport
+  image_geometry
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+find_package(OpenCV REQUIRED)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -52,6 +57,7 @@ catkin_python_setup()
 add_message_files(
   FILES
   State.msg
+  ImageNumpy.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -73,6 +79,7 @@ generate_messages(
   geometry_msgs
   sensor_msgs
   std_msgs
+  world_msgs
 )
 
 ################################################
@@ -107,7 +114,15 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES image_caption_machine
-  CATKIN_DEPENDS message_runtime geometry_msgs rospy sensor_msgs std_msgs
+  CATKIN_DEPENDS
+    message_runtime
+	geometry_msgs
+	sensor_msgs
+	world_msgs
+	std_msgs
+	rospy
+	cv_bridge
+    image_transport
 #  DEPENDS system_lib
 )
 
@@ -186,6 +201,14 @@ include_directories(
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
+catkin_install_python(
+	PROGRAMS
+	  scripts/caption_service.py
+	  scripts/simulate_camera.py
+	  scripts/simulate_client.py
+	DESTINATION $(CATKIN_PACKAGE_BIN_DESTINATION)
+)
 
 #############
 ## Testing ##
