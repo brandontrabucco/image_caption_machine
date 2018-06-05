@@ -1,2 +1,2 @@
-# ros-image-captioner
+# image_caption_machine
 A simple ros package for captioning images streamed from a camera.
