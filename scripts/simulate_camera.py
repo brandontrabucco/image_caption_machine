@@ -20,13 +20,17 @@ class SimulateCamera(object):
 
     def spin(self, height, width, channels):
         rospy.loginfo("Starting camera simulation.")
+        cv2.namedWindow("Camera Simulation", cv2.WINDOW_NORMAL)
         while not rospy.is_shutdown():
-            image = self.bridge.cv2_to_imgmsg(
-                np.random.randint(0, 255, 
-                    (height, width, channels), dtype=np.uint8),
-                "bgr8")
-            self.publisher.publish(image)
+            image = np.random.randint(0, 255,
+                (height, width, channels), dtype=np.uint8)
+            image_message = self.bridge.cv2_to_imgmsg(
+                image, "bgr8")
+            cv2.imshow("Camera Simulation", image)
+            cv2.waitKey(5)
+            self.publisher.publish(image_message)
             self.rate.sleep()
+        cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     sc = SimulateCamera()
