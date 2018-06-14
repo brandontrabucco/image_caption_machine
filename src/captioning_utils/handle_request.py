@@ -8,7 +8,7 @@ class HandleRequest(object):
         with tf.gfile.GFile(
                 image_uri, "rb") as f:
             self.r = rq.post(
-                "http://ec2-18-216-95-59.us-east-2.compute.amazonaws.com",
+                server_url,
                 data=f.read())
         
     def caption(self):

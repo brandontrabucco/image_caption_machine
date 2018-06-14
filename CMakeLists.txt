@@ -64,6 +64,7 @@ add_message_files(
 add_service_files(
   FILES
   Caption.srv
+  CaptionString.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -207,6 +208,8 @@ catkin_install_python(
 	  scripts/caption_service.py
 	  scripts/simulate_camera.py
 	  scripts/simulate_client.py
+	  scripts/caption_client.py
+	  scripts/alexa_server.py
 	DESTINATION $(CATKIN_PACKAGE_BIN_DESTINATION)
 )
 
