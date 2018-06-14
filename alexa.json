@@ -1,0 +1,53 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "image caption",
+            "intents": [
+                {
+                    "name": "CaptionIntent",
+                    "slots": [],
+                    "samples": [
+                        "what do you see",
+                        "what is around you",
+                        "describe what you see",
+                        "caption what you see",
+                        "caption your suroundings",
+                        "caption your environment",
+                        "describe your surroundings",
+                        "provide a caption"
+                    ]
+                },
+                {
+                    "name": "QuestionIntent",
+                    "slots": [
+                        {
+                            "name": "Query",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "this is a question {Query}",
+                        "im asking a question {Query}",
+                        "here is a question {Query}",
+                        "quick question {Query}",
+                        "question {Query}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "stop",
+                        "cancel",
+                        "exit",
+                        "halt",
+                        "stop stop",
+                        "exit exit",
+                        "cancel cancel",
+                        "halt halt"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
