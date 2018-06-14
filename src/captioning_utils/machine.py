@@ -1,13 +1,14 @@
 import tensorflow as tf
 import cv2
 import os
+import rospy
 
 from captioning_utils.handle_request import HandleRequest
 
 class Machine(object):
 
     def __init__(self):
-        self.server_url = "http://ec2-13-59-194-77.us-east-2.compute.amazonaws.com"
+        self.server_url = rospy.get_param("model_server_url", "http://ec2-13-59-194-77.us-east-2.compute.amazonaws.com")
         self.image_uri = (os.path.dirname(os.path.realpath(__file__)) + "/image_buffer.jpg")
 
     def run_machine(self, image):

@@ -1,6 +1,7 @@
 import tensorflow as tf
 import cv2
 import os
+import rospy
 
 from captioning_utils.handle_request import HandleRequest
 
