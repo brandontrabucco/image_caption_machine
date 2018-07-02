@@ -205,11 +205,11 @@ include_directories(
 
 catkin_install_python(
 	PROGRAMS
-	  scripts/caption_service.py
-	  scripts/simulate_camera.py
-	  scripts/simulate_client.py
-	  scripts/caption_client.py
-	  scripts/alexa_server.py
+	  nodes/caption_service.py
+	  nodes/caption_client.py
+	  nodes/simulate_camera.py
+	  nodes/simulate_client.py
+	  nodes/alexa_server.py
 	DESTINATION $(CATKIN_PACKAGE_BIN_DESTINATION)
 )
 
