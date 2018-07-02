@@ -11,6 +11,7 @@ from cv_bridge import CvBridge, CvBridgeError
 class SimulateCamera(object):
 
     def __init__(self):
+
         rospy.init_node("simulate_camera_node")
         self.publisher = rospy.Publisher(
             "camera/rgb/image_raw", Image, queue_size=10)
