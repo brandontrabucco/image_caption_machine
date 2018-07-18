@@ -1,13 +1,27 @@
 <launch>
 
-  <param name="model_server_url" value="$(env MODEL_SERVER_URL)" />
+  <arg name="dummy_tf" default="0" />
+  <arg name="map_server" default="0" />
+  <arg name="map_path" value="/home/ballbot/smith_all.yaml" />
 
+  <include file="$(find dfnav)/launch/fake_nav.launch" />
   <include file="$(find astra_launch)/launch/astra.launch" />
+
+  <param name="model_server_url" value="$(env MODEL_SERVER_URL)" />
 
   <node name="ngrok" pkg="image_caption_machine" type="start_ngrok.sh" />
 
   <node name="alexa_server" pkg="image_caption_machine" type="alexa_server.py" />
   <node name="caption_service" pkg="image_caption_machine" type="caption_service.py" />
   <node name="caption_client" pkg="image_caption_machine" type="caption_client.py" />
+
+  <group if="$(arg dummy_tf)">
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="9.8 -4.2 0.5 0 0 0.707 -0.707 map camera_link 10" />
+    <node pkg="tf" type="static_transform_publisher" name="link2_broadcaster" args="9.0 -4.2 0 0 0 0 1 map base_link 10" />
+  </group>
+
+  <group if="$(arg map_server)">
+	  <node pkg="map_server" type="map_server" name="map_server" args="$(arg map_path)" />
+  </group>
 
 </launch>

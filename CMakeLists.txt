@@ -12,11 +12,13 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
+  rt_msgs
   world_msgs
   message_generation
   cv_bridge
   image_transport
   image_geometry
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -57,7 +59,7 @@ catkin_python_setup()
 add_message_files(
   FILES
   State.msg
-  ImageNumpy.msg
+  ImageBytes.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -80,6 +82,7 @@ generate_messages(
   geometry_msgs
   sensor_msgs
   std_msgs
+  rt_msgs
   world_msgs
 )
 
@@ -117,12 +120,13 @@ catkin_package(
 #  LIBRARIES image_caption_machine
   CATKIN_DEPENDS
     message_runtime
-	geometry_msgs
-	sensor_msgs
-	world_msgs
-	std_msgs
-	rospy
-	cv_bridge
+    geometry_msgs
+    sensor_msgs
+    world_msgs
+    std_msgs
+    rt_msgs
+    rospy
+    cv_bridge
     image_transport
 #  DEPENDS system_lib
 )
@@ -207,9 +211,8 @@ catkin_install_python(
 	PROGRAMS
 	  nodes/caption_service.py
 	  nodes/caption_client.py
-	  nodes/simulate_camera.py
-	  nodes/simulate_client.py
 	  nodes/alexa_server.py
+	  tests/machine_tests.py
 	DESTINATION $(CATKIN_PACKAGE_BIN_DESTINATION)
 )
 
