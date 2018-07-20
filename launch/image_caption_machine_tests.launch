@@ -4,13 +4,25 @@ This launch file expects the Astra camera to be plugged into the computer.
 
 <launch>
 
-  <include file="$(find dfnav)/launch/fake_nav.launch" />
-  <include file="$(find astra_launch)/launch/astra.launch" />
-
+  <arg name="onboard" value="$(env ONBOARD)"/>
+  <arg name="map_path" value="/home/ballbot/smith_all.yaml" />
+  <param name="proximity_threshold" value="0.15"/>
   <param name="model_server_url" value="$(env MODEL_SERVER_URL)" />
 
-  <node name="caption_service" pkg="image_caption_machine" type="caption_service.py" />
-  <node name="caption_client" pkg="image_caption_machine" type="caption_client.py" />
+  <include file="$(find astra_launch)/launch/astra.launch" />
+
+  <node name="world_server" pkg="image_caption_machine" type="world_server.py" />
   <node name="machine_tests" pkg="image_caption_machine" type="machine_tests.py" />
+  <node name="caption_server" pkg="image_caption_machine" type="caption_server.py" />
+
+  <group unless="$(arg onboard)">
+    <param name="robot_description" textfile="$(find ballbot_launch)/urdf/ballbot.urdf" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="laggy_jsp" pkg="turret" type="laggy_jsp.py" output="screen">
+      <param name="hz" value="500"/>
+      <param name="speed" value="1.5"/>
+    </node>
+  </group>
 
 </launch>

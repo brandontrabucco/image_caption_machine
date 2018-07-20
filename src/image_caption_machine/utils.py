@@ -1,13 +1,17 @@
-"""Author: Brandon Trabucco.
-Utilities for interacting with image captions.
+"""Author: Brandon Trabucco
+Helper functions for use in this package.
 """
 
 
 import rospy
 import numpy as np
+from tf import TransformListener
 from rt_msgs.msg import Odom
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
+from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Point
+from geometry_msgs.msg import Quaternion
 
 
 from image_caption_machine.msg import ImageBytes
@@ -22,6 +26,27 @@ def get_odom(target="/rt/odom"):
     try:
     	return rospy.wait_for_message(
             target, Odom, timeout=10.0)
+    except Exception, e:
+        rospy.logerr(str(e))
+
+    return None
+
+
+def get_pose(tf_listener, frame="base_footprint"):
+    """Get the current pose describing the robot.
+    Returns:
+        An Pose object containing positions.
+    """
+
+    try:
+	if tf_listener.canTransform(
+                "map", frame, rospy.Time.now() - rospy.Duration(0.5)):
+
+            curr_pos, curr_quat = tf_listener.lookupTransform(
+                "map", frame, rospy.Time(0))
+
+            return Pose(Point(*curr_pos), Quaternion(*curr_quat))
+
     except Exception, e:
         rospy.logerr(str(e))
 
@@ -51,5 +76,3 @@ def get_bytes_msg(image):
     return ImageBytes(
         flat_buffer=np.reshape(image, -1).tolist(),
         height=image.shape[0], width=image.shape[1], depth=image.shape[2])
-
-

@@ -6,15 +6,19 @@ Tests the major functionality of the Image Caption Machine.
 """
 
 
+import tf
 import rospy
-import image_caption_machine
+
+
+from image_caption_machine import ImageCaptionMachine as get_machine
 
 
 if __name__ == "__main__":
 
     """Create the node.
     """
-    m = image_caption_machine.get_machine()
+    rospy.init_node("machine_tests")
+    m = get_machine(tf.TransformListener())
     rospy.loginfo("Starting tests.")
 
 

@@ -18,12 +18,15 @@ class AWSPost(object):
         """Read image bytes and send the post.
         """
 
-        with tf.gfile.GFile(
-                image_uri, "rb") as f:
-            self.r = rq.post(
-                server_url,
-                data=f.read())
-        
-        self.caption = (self.r.json()["image_caption"] 
-            if self.r.status_code == 200 else [["", 0.0]])
+        try:
+            with tf.gfile.GFile(
+                    image_uri, "rb") as f:
+                self.r = rq.post(
+                    server_url,
+                    data=f.read())
+            self.caption = (self.r.json()["image_caption"] 
+                if self.r.status_code == 200 else [["", 0.0]])
+
+        except Exception, e:
+            self.caption = [["", 0.0]]
 
