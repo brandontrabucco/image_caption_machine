@@ -3,7 +3,7 @@ A utility for requesting captions.
 """
 
 
-from image_caption_machine.aws import get_captions_with_aws
+from image_caption_machine.amazon import get_captions_with_aws
 from image_caption_machine.captioner.abstract import Abstract
 
 

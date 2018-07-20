@@ -3,7 +3,7 @@ Utility functions to interact with AWS.
 """
 
 
-from image_caption_machine.aws.aws_client import AWSClient
+from image_caption_machine.amazon.aws_client import AWSClient
 
 
 _aws_client = AWSClient()

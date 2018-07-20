@@ -8,7 +8,7 @@ import os.path
 import rospy
 
 
-from image_caption_machine.aws.aws_post import AWSPost
+from image_caption_machine.amazon.aws_post import AWSPost
 
 
 class AWSClient(object):
