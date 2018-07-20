@@ -34,6 +34,9 @@ add_service_files(
   WorldString.srv
   WorldLength.srv
   WorldClosest.srv
+  NavigatorGo.srv
+  NavigatorFinished.srv
+  NavigatorAbort.srv
 )
 
 generate_messages(

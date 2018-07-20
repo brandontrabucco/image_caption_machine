@@ -7,36 +7,51 @@ import rospy
 
 
 from image_caption_machine.srv import Machine
-from image_caption_machine.abstract import Abstract
+from image_caption_machine.machine.abstract import Abstract
 
 
 class Client(Abstract):
-	"""Utility class to serve Image Caption Machine.
-	"""
+    """Utility class to serve Image Caption Machine.
+    """
 
     def __init__(self):
         """Start the API services.
         """
 
+        rospy.wait_for_service('icm/machine/welcome', timeout=10.0)
         self.welcome_service = rospy.ServiceProxy(
-            "icm/machine/welcome", MachineService)
+            "icm/machine/welcome", Machine)
+
+        rospy.wait_for_service('icm/machine/navigate', timeout=10.0)
         self.navigate_service = rospy.ServiceProxy(
-            "icm/machine/navigate", MachineService)
+            "icm/machine/navigate", Machine)
+
+        rospy.wait_for_service('icm/machine/learn', timeout=10.0)
         self.learn_service = rospy.ServiceProxy(
-            "icm/machine/learn", MachineService)
+            "icm/machine/learn", Machine)
+
+        rospy.wait_for_service('icm/machine/where', timeout=10.0)
         self.where_service = rospy.ServiceProxy(
-            "icm/machine/where", MachineService)
+            "icm/machine/where", Machine)
+
+        rospy.wait_for_service('icm/machine/caption', timeout=10.0)
         self.caption_service = rospy.ServiceProxy(
-            "icm/machine/caption", MachineService)
+            "icm/machine/caption", Machine)
+
+        rospy.wait_for_service('icm/machine/recite', timeout=10.0)
         self.recite_service = rospy.ServiceProxy(
-            "icm/machine/recite", MachineService)
+            "icm/machine/recite", Machine)
+
+        rospy.wait_for_service('icm/machine/help', timeout=10.0)
         self.help_service = rospy.ServiceProxy(
-            "icm/machine/help", MachineService)
+            "icm/machine/help", Machine)
+
+        rospy.wait_for_service('icm/machine/stop', timeout=10.0)
         self.stop_service = rospy.ServiceProxy(
-            "icm/machine/stop", MachineService)
+            "icm/machine/stop", Machine)
 
 
-	def welcome(self):
+    def welcome(self):
         """Provide useful info when the app starts.
         """
 
@@ -67,7 +82,7 @@ class Client(Abstract):
             Where place are you.
         """
 
-        return self.where_service("")
+        return self.where_service("").output
 
 
     def caption(self):

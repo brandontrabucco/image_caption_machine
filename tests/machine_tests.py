@@ -18,14 +18,13 @@ if __name__ == "__main__":
     """Create the node.
     """
     rospy.init_node("machine_tests")
-    m = get_machine(tf.TransformListener())
+    m = get_machine()
     rospy.loginfo("Starting tests.")
 
 
     """Test the major fields.
     """
-    rospy.loginfo("Places: " + str(m.places))
-    rospy.loginfo("__call__: " + m())
+    rospy.loginfo("Welcome: " + m.welcome())
     rospy.loginfo("Help: " + m.help())
     rospy.loginfo("Stop: " + m.stop())
     rospy.loginfo("Navigate: " + m.navigate("default"))

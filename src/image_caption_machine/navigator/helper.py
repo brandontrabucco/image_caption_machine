@@ -19,7 +19,7 @@ class Helper(Abstract):
     """Utility class to manage navigation with DFNav.
     """
 
-    def __init__(self, tfl):
+    def __init__(self):
         """Initialize the publishers and subscribers.
         """
 
@@ -52,15 +52,15 @@ class Helper(Abstract):
         """
 
         def update():
-        """Checks whether the navigation is finished.
-        """
+            """Checks whether the navigation is finished.
+            """
 	        
-	        replan_expired = (self.replan_time is not None and (
-	            rospy.Time.now() - self.replan_time).to_sec() > 4.0)
-	        curr_pose = get_pose(self.tf_listener)
-	        near_goal = (curr_pose is not None and (
-	            Place(pose=curr_pose).to(Place(pose_stamped=goal_pose)) < self.proximity))
-	        self.is_finished = (replan_expired or near_goal)
+	    replan_expired = (self.replan_time is not None and (
+	        rospy.Time.now() - self.replan_time).to_sec() > 4.0)
+	    curr_pose = get_pose(self.tf_listener)
+	    near_goal = (curr_pose is not None and (
+	        Place(pose=curr_pose).to(Place(pose_stamped=goal_pose)) < self.proximity))
+	    self.is_finished = (replan_expired or near_goal)
 
         r = rospy.Rate(10)
         self.is_finished = False

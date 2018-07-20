@@ -6,14 +6,14 @@ Serve the Image Caption Machine on a ROS node.
 import rospy
 
 
-from image_caption_machine.abstract import Abstract
+from image_caption_machine.machine.abstract import Abstract
 from image_caption_machine.machine.helper import Helper
 from image_caption_machine.srv import Machine, MachineResponse
 
 
 class Server(Abstract):
-	"""Utility class to serve Image Caption Machine.
-	"""
+    """Utility class to serve Image Caption Machine.
+    """
 
     def __init__(self, node_name="machine_server"):
         """Start the API services.
@@ -22,21 +22,21 @@ class Server(Abstract):
         rospy.init_node(node_name)
         self.helper = Helper()
         self.welcome_service = rospy.Service(
-            "icm/machine/welcome", MachineService, self.welcome)
+            "icm/machine/welcome", Machine, self.welcome)
         self.navigate_service = rospy.Service(
-            "icm/machine/navigate", MachineService, self.navigate)
+            "icm/machine/navigate", Machine, self.navigate)
         self.learn_service = rospy.Service(
-            "icm/machine/learn", MachineService, self.learn)
+            "icm/machine/learn", Machine, self.learn)
         self.where_service = rospy.Service(
-            "icm/machine/where", MachineService, self.where)
+            "icm/machine/where", Machine, self.where)
         self.caption_service = rospy.Service(
-            "icm/machine/caption", MachineService, self.caption)
+            "icm/machine/caption", Machine, self.caption)
         self.recite_service = rospy.Service(
-            "icm/machine/recite", MachineService, self.recite)
+            "icm/machine/recite", Machine, self.recite)
         self.help_service = rospy.Service(
-            "icm/machine/help", MachineService, self.help)
+            "icm/machine/help", Machine, self.help)
         self.stop_service = rospy.Service(
-            "icm/machine/stop", MachineService, self.stop)
+            "icm/machine/stop", Machine, self.stop)
         rospy.spin()
 
 

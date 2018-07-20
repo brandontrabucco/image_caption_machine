@@ -9,9 +9,10 @@ import numpy as np
 
 from image_caption_machine.srv import Caption, CaptionResponse
 from image_caption_machine.captioner.helper import Helper
+from image_caption_machine.captioner.abstract import Abstract
 
 
-class Server(object):
+class Server(Abstract):
     """Class for requsting image captions.
     """
 

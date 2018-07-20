@@ -10,9 +10,10 @@ from image_caption_machine.srv import Caption
 from image_caption_machine.utils import get_bytes_msg
 from image_caption_machine.utils import get_camera_image
 from image_caption_machine.aws import get_captions_with_aws
+from image_caption_machine.captioner.abstract import Abstract
 
 
-class Client(object):
+class Client(Abstract):
     """Class for requsting image captions.
     """
 

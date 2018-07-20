@@ -15,6 +15,8 @@ This launch file expects the Astra camera to be plugged into the computer.
   <node name="world_server" pkg="image_caption_machine" type="world_server.py" />
   <node name="alexa_server" pkg="image_caption_machine" type="alexa_server.py" />
   <node name="caption_server" pkg="image_caption_machine" type="caption_server.py" />
+  <node name="machine_server" pkg="image_caption_machine" type="machine_server.py" />
+  <node name="navigator_server" pkg="image_caption_machine" type="navigator_server.py" />
 
   <group unless="$(arg onboard)">
     <param name="robot_description" textfile="$(find ballbot_launch)/urdf/ballbot.urdf" />

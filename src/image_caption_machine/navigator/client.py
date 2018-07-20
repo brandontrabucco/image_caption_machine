@@ -39,7 +39,7 @@ class Client(Abstract):
         self.fn = (lambda: None)
 
 
-    def handle_callback(self):
+    def handle_callback(self, m):
         """Execute the callback function.
         """
 
@@ -51,7 +51,7 @@ class Client(Abstract):
         """Start a navigation command
         """
 
-        self.go_service(NavigatorGo(goal_pose))
+        self.go_service(goal_pose)
 
 
     def callback(self, fn):
@@ -65,12 +65,12 @@ class Client(Abstract):
     	"""Check if the navigation is finished.
     	"""
 
-    	return self.finished_service(NavigatorFinished()).data
+    	return self.finished_service().data
 
 
     def abort(self):
         """Quickly halt the navigation process.
         """
 
-        self.abort_service(NavigationAbort(Bool(True)))
+        self.abort_service(Bool(True))
 

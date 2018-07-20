@@ -4,10 +4,10 @@ Define a public API for the Image Caption Machine.
 
 
 class Abstract(object):
-	"""Public API for an Image Caption Machine.
-	"""
+    """Public API for an Image Caption Machine.
+    """
 
-	def welcome(self):
+    def welcome(self):
         """Provide useful info when the app starts.
         """
 
