@@ -21,14 +21,18 @@ if __name__ == "__main__":
     m = get_machine()
     rospy.loginfo("Starting tests.")
 
+    """Let the systems initialize.
+    """
+    rospy.sleep(4.0)
+
 
     """Test the major fields.
     """
     rospy.loginfo("Welcome: " + m.welcome())
     rospy.loginfo("Help: " + m.help())
     rospy.loginfo("Stop: " + m.stop())
-    rospy.loginfo("Navigate: " + m.navigate("default"))
     rospy.loginfo("Learn: " + m.learn("default"))
+    rospy.loginfo("Navigate: " + m.navigate("default"))
     rospy.loginfo("Where: " + m.where())
     rospy.loginfo("Caption: " + m.caption())
     rospy.loginfo("Recite: " + m.recite())

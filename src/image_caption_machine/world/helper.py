@@ -40,7 +40,7 @@ class Helper(Abstract):
 
         if not os.path.isfile(self.fname):
             with open(self.fname, "w") as f:
-                json.dump([Place().json], f)
+                json.dump([], f)
         self._load()
 
 
@@ -89,7 +89,7 @@ class Helper(Abstract):
         """Return the closest place and distance to q.
         """
 
-        best_place = None
+        best_place = Place(name="None", x=-1, y=-1)
         best_distance = float("inf")
         for p in self.content:
             current_distance = q.to(p)

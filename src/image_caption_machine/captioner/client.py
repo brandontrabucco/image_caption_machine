@@ -7,8 +7,8 @@ import rospy
 
 
 from image_caption_machine.srv import Caption
-from image_caption_machine.utils import get_bytes_msg
-from image_caption_machine.utils import get_camera_image
+from image_caption_machine.utils import image_to_msg
+from image_caption_machine.utils import get_image
 from image_caption_machine.captioner.abstract import Abstract
 
 
@@ -34,9 +34,9 @@ class Client(Abstract):
         """
 
         try:
-            image = (get_camera_image() 
+            image = (get_image() 
                 if image is None else image)
-            response = self.caption_service(get_bytes_msg(
+            response = self.caption_service(image_to_msg(
                 image)).caption_text
         except Exception, e:
             rospy.logerr(str(e))

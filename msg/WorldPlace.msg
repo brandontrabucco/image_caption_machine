@@ -1,2 +1,2 @@
 string name
-rt_msgs/Odom odom
+geometry_msgs/PoseStamped pose_stamped

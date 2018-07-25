@@ -2,15 +2,15 @@
 Adapted from Matthew Wilson/shmoo_echo/nodes/nav_patch.py
 """
 
-
-import tf
+import tf2_ros
+import tf2_geometry_msgs
 import rospy
 from std_msgs.msg import Bool
 from flat_ball.msg import TrajWithBackup
 from geometry_msgs.msg import PoseStamped
 
 
-from image_caption_machine.utils import get_pose
+from image_caption_machine.utils import get_pose_stamped
 from image_caption_machine.world.place import Place
 from image_caption_machine.navigator.abstract import Abstract
 
@@ -23,7 +23,9 @@ class Helper(Abstract):
         """Initialize the publishers and subscribers.
         """
 
-        self.tf_listener = tf.TransformListener()
+        self.tf_buffer = tf2_ros.Buffer()
+        self.tf_listener = tf2_ros.TransformListener(
+            self.tf_buffer)
 
         self.goal_publisher = rospy.Publisher(
             "/goal", PoseStamped, queue_size=2)
@@ -44,22 +46,26 @@ class Helper(Abstract):
 
         self.is_finished = True
         self.on_complete = (lambda: None)
-        self.proximity = rospy.get_param("proximity_threshold")
 
 
     def handle_goal(self, goal_pose):
         """Calculate if we are close enough to the goal.
         """
 
+        transform = self.tf_buffer.lookup_transform(
+            "map", "body", rospy.Time(0))
+        goal_pose = tf2_geometry_msgs.do_transform_pose(
+            goal_pose, transform)
+
         def update():
             """Checks whether the navigation is finished.
             """
-	        
+	    
 	    replan_expired = (self.replan_time is not None and (
 	        rospy.Time.now() - self.replan_time).to_sec() > 4.0)
-	    curr_pose = get_pose(self.tf_listener)
+	    curr_pose = get_pose_stamped(self.tf_buffer)
 	    near_goal = (curr_pose is not None and (
-	        Place(pose=curr_pose).to(Place(pose_stamped=goal_pose)) < self.proximity))
+	        Place(pose_stamped=curr_pose).to(Place(pose_stamped=goal_pose)) < 0.1))
 	    self.is_finished = (replan_expired or near_goal)
 
         r = rospy.Rate(10)
@@ -91,6 +97,10 @@ class Helper(Abstract):
         """
 
         if self.is_finished:
+            transform = self.tf_buffer.lookup_transform(
+                "body", "map", rospy.Time(0))
+            goal_pose = tf2_geometry_msgs.do_transform_pose(
+                goal_pose, transform)
             self.goal_publisher.publish(goal_pose)
 
 
@@ -104,6 +114,7 @@ class Helper(Abstract):
 
             fn()
             self.on_complete = (lambda: None)
+            self.is_finished = True
 
         self.on_complete = _on_complete
 

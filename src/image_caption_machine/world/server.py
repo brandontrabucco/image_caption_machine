@@ -58,7 +58,7 @@ class Server(Abstract):
         place = self.helper.lookup(m.name)
         if place is not None:
             return WorldLookupResponse(place.msg, True)
-        return WorldLookupResponse(Place().msg, False)
+        return WorldLookupResponse(Place(name="None", x=-1, y=-1).msg, False)
 
 
     def string(self, m):

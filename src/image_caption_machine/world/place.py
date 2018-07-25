@@ -12,56 +12,46 @@ from geometry_msgs.msg import Pose
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import PoseStamped
-from tf.transformations import quaternion_from_euler
 from tf.transformations import euler_from_quaternion
 
 
 from image_caption_machine.msg import WorldPlace
+from image_caption_machine.convert.message import convert_ros_message_to_dictionary
+from image_caption_machine.convert.message import convert_dictionary_to_ros_message
 
 
 class Place(object):
     """Utility class for managing physycal naed locations.
     """
     
-    def __init__(self, name="default", odom=Odom(
-            xPos=0.0, yPos=0.0, yaw=0.0, 
-            xVel=0.0, yVel=0.0, 
-            xAng=0.0, yAng=0.0, 
-            xAngVel=0.0, yAngVel=0.0), x=None, y=None, theta=None,
-            json=None, msg=None,
-            pose=None, pose_stamped=None):
+    def __init__(self, name="default", pose_stamped=PoseStamped(
+            Header(0, rospy.Time(secs=0, nsecs=0), "None"),
+            Pose(Point(0.0, 0.0, 0.0), 
+                 Quaternion(0.0, 0.0, 0.0, 0.0))), 
+            x=None, y=None,
+            json=None, msg=None):
         """Initialize the class with default parameters.
         Args:
             name: str REQUIRED
-            odom: Odom REQUIRED
+            pose_stamped: PoseStamped REQUIRED
             x: float
             y: float
-            theta: float
-            json: {name: "...", odom: {...}}
+            json: {name: "...", pose_stamped: {...}}
             msg: WorldPlace message
-            pose: Pose message
-            pose_stamped: PoseStamped message
         """
 
         self.name = name
-        self.odom = odom
+        self.pose_stamped = pose_stamped
 
         if x is not None:
-            self.odom.xPos = x
+            self.pose_stamped.pose.position.x = x
         if y is not None:
-            self.odom.yPos = y
-        if theta is not None:
-            self.odom.yaw = theta
+            self.pose_stamped.pose.position.y = y
 
         if json is not None:
             self.json = json
         if msg is not None:
             self.msg = msg
-
-        if pose is not None:
-            self.pose = pose
-        if pose_stamped is not None:
-            self.pose_stamped = pose_stamped
 
 
     @property
@@ -69,16 +59,8 @@ class Place(object):
         """Serialize the place to json.
         """
 
-        return {"name": self.name, "odom": {
-            "xPos": self.odom.xPos,
-            "yPos": self.odom.yPos,
-            "yaw": self.odom.yaw,
-            "xVel": self.odom.xVel,
-            "yVel": self.odom.yVel,
-            "xAng": self.odom.xAng,
-            "yAng": self.odom.yAng,
-            "xAngVel": self.odom.xAngVel,
-            "yAngVel": self.odom.yAngVel}}
+        return {"name": self.name, "pose_stamped": 
+            convert_ros_message_to_dictionary(self.pose_stamped)}
 
 
     @json.setter
@@ -87,58 +69,8 @@ class Place(object):
         """
 
         self.name = val["name"]
-        self.odom.xPos = val["odom"]["xPos"]
-        self.odom.yPos = val["odom"]["yPos"]
-        self.odom.yaw = val["odom"]["yaw"]
-        self.odom.xVel = val["odom"]["xVel"]
-        self.odom.yVel = val["odom"]["yVel"]
-        self.odom.xAng = val["odom"]["xAng"]
-        self.odom.yAng = val["odom"]["yAng"]
-        self.odom.xAngVel = val["odom"]["xAngVel"]
-        self.odom.yAngVel = val["odom"]["yAngVel"]
-
-
-    @property
-    def pose(self):
-        """Calculates the pose msg of this place.
-        """
-
-        return Pose(Point(self.x, self.y, 0.0), 
-            Quaternion(*quaternion_from_euler(self.odom.xAng, self.odom.yAng, self.theta)))
-
-
-    @pose.setter
-    def pose(self, val):
-        """Assigns the pose values to this odom.
-        """
-
-        self.odom.xPos = val.position.x
-        self.odom.yPos = val.position.y
-        roll, pitch, yaw = euler_from_quaternion([
-          val.orientation.x, 
-          val.orientation.y, 
-          val.orientation.z, 
-          val.orientation.w])
-        self.odom.yaw = yaw
-        self.odom.xAng = roll
-        self.odom.yAng = pitch
-
-
-    @property
-    def pose_stamped(self):
-        """Calculates the stamped pose msg of this place.
-        """
-        
-        stamp = Header(0.0, rospy.Time(0), "map")
-        return PoseStamped(stamp, self.pose)
-
-
-    @pose_stamped.setter
-    def pose_stamped(self, val):
-        """Assigns the stamped pose to this odom.
-        """
-        
-        self.pose = val.pose
+        self.pose_stamped = convert_dictionary_to_ros_message(
+            "geometry_msgs/PoseStamped", val["pose_stamped"])
 
 
     @property
@@ -146,7 +78,7 @@ class Place(object):
         """Utility to convert Place() to WorldPlace message.
         """
 
-        return WorldPlace(name=self.name, odom=self.odom)
+        return WorldPlace(name=self.name, pose_stamped=self.pose_stamped)
 
 
     @msg.setter
@@ -155,7 +87,7 @@ class Place(object):
         """
 
         self.name = val.name
-        self.odom = val.odom
+        self.pose_stamped = val.pose_stamped
 
 
     @property
@@ -163,7 +95,7 @@ class Place(object):
         """Helper to get the x position.
         """
 
-        return self.odom.xPos
+        return self.pose_stamped.pose.position.x
 
 
     @property
@@ -171,25 +103,7 @@ class Place(object):
         """Helper to get the y position.
         """
 
-        return self.odom.yPos
-
-
-    @property
-    def theta(self):
-        """Helper to get the yaw position.
-        """
-
-        return self.odom.yaw
-
-
-    @property
-    def speed(self):
-        """Helper to get the absolute speed of the robot.
-        """
-
-        dx = self.odom.xVel
-        dy = self.odom.yVel
-        return math.sqrt((dx * dx) + (dy * dy))
+        return self.pose_stamped.pose.position.y
 
     
     def to(self, other):

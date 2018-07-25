@@ -12,48 +12,46 @@ from sensor_msgs.msg import Image
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import Quaternion
+from geometry_msgs.msg import PoseStamped
+from tf.transformations import quaternion_from_euler
 
 
 from image_caption_machine.msg import ImageBytes
 
 
-def get_odom(target="/rt/odom"):
-    """Get the current odom describing the robot.
-    Returns:
-        An Odom object containing positions.
+def transform_to_pose(transform):
+    """Converts from Transform message into a Pose message.
     """
 
-    try:
-    	return rospy.wait_for_message(
-            target, Odom, timeout=10.0)
-    except Exception, e:
-        rospy.logerr(str(e))
-
-    return None
+    return Pose(Point(transform.translation.x, 
+                      transform.translation.y, 
+                      transform.translation.z), transform.rotation)
 
 
-def get_pose(tf_listener, frame="base_footprint"):
+def stamped_transform_to_pose(transform):
+    """Converts from StampedTransform message into a Pose message.
+    """
+
+    return PoseStamped(transform.header, 
+        transform_to_pose(transform.transform))
+
+
+def get_pose_stamped(tf_buffer):
     """Get the current pose describing the robot.
     Returns:
         An Pose object containing positions.
     """
 
-    try:
-	if tf_listener.canTransform(
-                "map", frame, rospy.Time.now() - rospy.Duration(0.5)):
-
-            curr_pos, curr_quat = tf_listener.lookupTransform(
-                "map", frame, rospy.Time(0))
-
-            return Pose(Point(*curr_pos), Quaternion(*curr_quat))
-
-    except Exception, e:
-        rospy.logerr(str(e))
-
-    return None
+    while True:
+        try:
+            return stamped_transform_to_pose(
+                tf_buffer.lookup_transform(
+                    "map", "body", rospy.Time(0)))
+        except Exception, e:
+            rospy.logerr(str(e))
 
 
-def get_camera_image(target="/camera/rgb/image_raw"):
+def get_image(target="/camera/rgb/image_raw"):
     """Read from the camera raw topic to get an image.
     Returns:
         Numpy matrix for a single image.
@@ -67,7 +65,7 @@ def get_camera_image(target="/camera/rgb/image_raw"):
     return image
 
 
-def get_bytes_msg(image):
+def image_to_msg(image):
     """Converts from numpy image to ImageBytes message
     Returns:
         ImageBytes message object

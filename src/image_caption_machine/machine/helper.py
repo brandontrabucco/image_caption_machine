@@ -3,14 +3,13 @@ The engine class behind the image captioner.
 """
 
 
-import tf
+import tf2_ros
 import rospy
 import threading
-from geometry_msgs.msg import PoseStamped
 
 
 from image_caption_machine.values import *
-from image_caption_machine.utils import get_pose
+from image_caption_machine.utils import get_pose_stamped
 from image_caption_machine.machine.abstract import Abstract
 from image_caption_machine.srv import CaptionString
 from image_caption_machine.world.place import Place
@@ -28,7 +27,9 @@ class Helper(Abstract):
         """
 
         self.caption_text = "Unknown."
-        self.tf_listener = tf.TransformListener()
+        self.tf_buffer = tf2_ros.Buffer()
+        self.tf_listener = tf2_ros.TransformListener(
+            self.tf_buffer)
         
         self.places = World()
         self.captioner = Captioner()
@@ -52,12 +53,12 @@ class Helper(Abstract):
         if not destination:
             return UNK_STRING.format(
                 name, self.places.length(), self.places.string())
-        curr_pose = get_pose(self.tf_listener)
+        curr_pose = get_pose_stamped(self.tf_buffer)
         if not curr_pose:
             return LOST_STRING
         self.navigator.go(destination.pose_stamped)
         return NAV_STRING.format(
-            name, Place(pose=curr_pose).to(destination))
+            name, Place(pose_stamped=curr_pose).to(destination))
 
 
     def learn(self, name):
@@ -69,10 +70,10 @@ class Helper(Abstract):
         destination = self.places.lookup(name)
         if destination:
             return KNOWN_STRING.format(name)
-        curr_pose = get_pose(self.tf_listener)
+        curr_pose = get_pose_stamped(self.tf_buffer)
         if not curr_pose:
             return LOST_STRING
-        self.places.append(Place(name=name, pose=curr_pose))
+        self.places.append(Place(name=name, pose_stamped=curr_pose))
         return LEARN_STRING.format(name)
 
 
@@ -82,10 +83,10 @@ class Helper(Abstract):
             Where place are you.
         """
 
-        curr_pose = get_pose(self.tf_listener)
+        curr_pose = get_pose_stamped(self.tf_buffer)
         if not curr_pose:
             return LOST_STRING
-        p, distance = self.places.closest(Place(pose=curr_pose))
+        p, distance = self.places.closest(Place(pose_stamped=curr_pose))
         return WHERE_STRING.format(p.name, distance)
 
 
