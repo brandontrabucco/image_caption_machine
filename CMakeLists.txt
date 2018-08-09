@@ -65,6 +65,8 @@ catkin_install_python(
 	  nodes/world_server.py
 	  nodes/caption_server.py
 	  nodes/alexa_server.py
+      nodes/machine_server.py
+      nodes/navigator_server.py
 	  tests/machine_tests.py
 	DESTINATION $(CATKIN_PACKAGE_BIN_DESTINATION)
 )

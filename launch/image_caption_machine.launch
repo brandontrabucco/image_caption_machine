@@ -5,18 +5,16 @@ This launch file expects the Astra camera to be plugged into the computer.
 <launch>
 
   <arg name="onboard" value="$(env ONBOARD)"/>
-  <arg name="map_path" value="/home/ballbot/smith_all.yaml" />
-  <param name="proximity_threshold" value="0.15"/>
   <param name="model_server_url" value="$(env MODEL_SERVER_URL)" />
 
   <include file="$(find astra_launch)/launch/astra.launch" />
 
   <node name="ngrok" pkg="image_caption_machine" type="start_ngrok.sh" />
-  <node name="world_server" pkg="image_caption_machine" type="world_server.py" />
+<!--  <node name="world_server" pkg="image_caption_machine" type="world_server.py" /> -->
   <node name="alexa_server" pkg="image_caption_machine" type="alexa_server.py" />
-  <node name="caption_server" pkg="image_caption_machine" type="caption_server.py" />
-  <node name="machine_server" pkg="image_caption_machine" type="machine_server.py" />
-  <node name="navigator_server" pkg="image_caption_machine" type="navigator_server.py" />
+<!--  <node name="caption_server" pkg="image_caption_machine" type="caption_server.py" /> -->
+<!--  <node name="machine_server" pkg="image_caption_machine" type="machine_server.py" /> -->
+<!--  <node name="navigator_server" pkg="image_caption_machine" type="navigator_server.py" /> -->
 
   <group unless="$(arg onboard)">
     <param name="robot_description" textfile="$(find ballbot_launch)/urdf/ballbot.urdf" />

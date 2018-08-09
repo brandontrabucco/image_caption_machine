@@ -5,8 +5,6 @@ This launch file expects the Astra camera to be plugged into the computer.
 <launch>
 
   <arg name="onboard" value="$(env ONBOARD)"/>
-  <arg name="map_path" value="/home/ballbot/smith_all.yaml" />
-  <param name="proximity_threshold" value="0.15"/>
   <param name="model_server_url" value="$(env MODEL_SERVER_URL)" />
 
   <include file="$(find astra_launch)/launch/astra.launch" />

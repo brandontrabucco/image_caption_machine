@@ -11,7 +11,6 @@ import threading
 from image_caption_machine.values import *
 from image_caption_machine.utils import get_pose_stamped
 from image_caption_machine.machine.abstract import Abstract
-from image_caption_machine.srv import CaptionString
 from image_caption_machine.world.place import Place
 from image_caption_machine.world import Client as World
 from image_caption_machine.captioner import Client as Captioner
