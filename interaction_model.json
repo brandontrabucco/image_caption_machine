@@ -1,0 +1,67 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "image caption machine",
+            "intents": [
+                {
+                    "name": "StopIntent",
+                    "slots": [],
+                    "samples": [
+                        "stop"
+                    ]
+                },
+                {
+                    "name": "HelpIntent",
+                    "slots": [],
+                    "samples": [
+                        "help"
+                    ]
+                },
+                {
+                    "name": "ReciteIntent",
+                    "slots": [],
+                    "samples": [
+                        "tell me what you saw"
+                    ]
+                },
+                {
+                    "name": "CaptionIntent",
+                    "slots": [],
+                    "samples": [
+                        "look around you"
+                    ]
+                },
+                {
+                    "name": "WhereIntent",
+                    "slots": [],
+                    "samples": [
+                        "where are you"
+                    ]
+                },
+                {
+                    "name": "LearnIntent",
+                    "slots": [
+                        {
+                            "name": "Query",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "this place is called {Query}"
+                    ]
+                },
+                {
+                    "name": "NavigateIntent",
+                    "slots": [
+                        {
+                            "name": "Query",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": []
+                }
+            ],
+            "types": []
+        }
+    }
+}
