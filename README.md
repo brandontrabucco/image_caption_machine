@@ -81,7 +81,18 @@ Congratulations, you are now able to run your own Image Caption Machine!
 
 ### Running The Repo
 
-... 
+Once everything has been installed, and you have verified every component is functioning individually, you are now ready to run the Image Caption Machine! Source your catkin workspace, and run the tests launch file. 
+
+```
+ubuntu@server.name:~$ cd ~/my_workspace
+ubuntu@server.name:~$ source devel/setup.sh
+ubuntu@server.name:~$ cd ~/my_workspace/src
+ubuntu@server.name:~$ roslaunch image_caption_machine image_caption_machine_tests.launch
+```
+
+This may not work properly for you, in which case you are most likely not running this code on the [Ballbot](http://www.msl.ri.cmu.edu/projects/ballbot/). In this case, take a look at the *launch/image_caption_machine.launch* launch files, and replace the Ballbot URDF and related resource files with your own robot equivalents. Also, modify the navigator in *src/image_caption_machine/navigator/helper.py* to use your navigation API instead of ours.
+
+If you are running this project on the [Ballbot](http://www.msl.ri.cmu.edu/projects/ballbot/), check the messages and topics being published, and make certain the navigator *src/image_caption_machine/navigator/helper.py* is listening to the appropriate domains. Make certain all the necessary libraries are installed.
 
 ### Acknowledgements
 
