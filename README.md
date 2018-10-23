@@ -51,7 +51,7 @@ You should now be able to say `Alexa, what time is it?` and Alexa will respond. 
 
 The Image Caption model is meant to run on a remote AWS EC2 instance. 
 
-1. Log into the [AWS EC2 Console](https://us-east-2.console.aws.amazon.com) and on the EC2 Dashboard, select Launch Instance, and select the *Deep Learning AMI (Ubuntu) Version 16.0* or an equivalent instance image. Follow the instructions on AWS to initialize and connect to your instance. 
+1. Log into the [AWS EC2 Console](https://us-east-2.console.aws.amazon.com) and on the `EC2 Dashboard`, select `Launch Instance`, and select the *Deep Learning AMI (Ubuntu) Version 16.0* or an equivalent instance image. Follow the instructions on AWS to initialize and connect to your instance. 
 
 2. Once your instance is setup, follow any online tutorial to [Set up Flask and Apache on AWS EC2 Instance](https://vishnut.me/blog/ec2-flask-apache-setup.html). With your server running, copy the web server from the [Project Flask Server](http://github.com/brandontrabucco/image_caption_app) into your instance. 
 
