@@ -59,7 +59,25 @@ The Image Caption model is meant to run on a remote AWS EC2 instance.
 
 ### Setting Up The Repo
 
-... 
+This repository depends on a handful of python packages. Install these first before running the repository.
+
+```
+ubuntu@server.name:~$ sudo pip install numpy
+ubuntu@server.name:~$ sudo pip install tensorflow
+ubuntu@server.name:~$ sudo pip install opencv-python
+ubuntu@server.name:~$ sudo pip install requests
+```
+
+You are now ready to install the repository. Clone the repository into your catkin workspace created at the beginning of the setup process.
+
+```
+ubuntu@server.name:~$ cd ~/my_workspace/src
+ubuntu@server.name:~$ git clone http://github.com/brandontrabucco/image_caption_machine
+ubuntu@server.name:~$ catkin_make clean
+ubuntu@server.name:~$ catkin_make
+```
+
+Congratulations, you are now able to run your own Image Caption Machine!
 
 ### Running The Repo
 
@@ -67,4 +85,4 @@ The Image Caption model is meant to run on a remote AWS EC2 instance.
 
 ### Acknowledgements
 
-... 
+Thank you to Dr. Jean Oh and Dr. Ralph Hollis for their wisdom and helpful comments throughout this project. Special thanks to Rachel Burcin, John Dolan, Ziqi Guo, and the many other key organizers for the 2018 [Robotics Intitute Summer Scholars (R.I.S.S.)](https://riss.ri.cmu.edu/) program. Thank you to the Microdynamic Systems Lab (MSL) for providing a space to work on this project, and thank you also to RISS, MSL, the Carnegie Mellon University Robotics Institute, and the National Science Foundation grant IIS-1547143 for funding this project.
