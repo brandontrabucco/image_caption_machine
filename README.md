@@ -37,4 +37,22 @@ Congratulations, you have installed ROS Indigo, and are one step closer to runni
 
 This project was built to use an Echo Dot Generation 2, but presumably, any Alexa enabled device would be fine. First, you must [connect your echo dot to the internet](https://www.amazon.com/gp/help/customer/display.html?nodeId=202011800) to interact with skills. Second, you must [register your echo dot to your account](https://www.amazon.com/gp/help/customer/display.html?nodeId=201994280) so that you can use custom skills. 
 
-You should now be able to 
+You should now be able to say `Alexa, what time is it?` and Alexa will respond. The next step in this process is to create the custom Alexa skill that will enable you to use the Image Caption Machine. This skill must be testing enabled.
+
+Log into the [Alexa Skill Developer Console](https://developer.amazon.com/alexa-skills-kit) and start a custom skill. Upload the file `alexa.json` into the site. Head to the testing panel, and enable skill testing on your account devices.
+
+### Configuring AWS
+
+... 
+
+### Setting Up The Repo
+
+... 
+
+### Running The Repo
+
+... 
+
+### Acknowledgements
+
+... 
