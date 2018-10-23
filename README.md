@@ -12,7 +12,7 @@ Modern approaches to Image Captioning use a neural network architecture called [
 
 The Show And Tell Model performs a translation from Images into Captions. The first part of the model, namely the *encoder*, is a Convolutional Neural Network. This project uses the [Inception V3 Convolutional Neural Network](https://arxiv.org/abs/1512.00567) for the encoder. The second part of the model, namely the *decoder*, is a Recurrent Neural Network that performs sequence generation. This project uses [Long Short Term Memory](https://www.bioinf.jku.at/publications/older/2604.pdf) to resolve the vanishing gradient problem.
 
-While Show And Tell learns freeform image captions for many different types of images, the algorithm does not produce captions with many accurate visual details. This project proposed a method to correct this in my project.
+While Show And Tell learns freeform image captions for many different types of images, the algorithm does not produce captions with many accurate visual details. This project proposed a method to correct this.
 
 ## Setting Up
 
