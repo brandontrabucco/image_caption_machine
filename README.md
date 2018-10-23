@@ -43,7 +43,7 @@ You should now be able to say `Alexa, what time is it?` and Alexa will respond. 
 
 2. With the skill created, click the `JSON Editor` tab in the left menu pane. In the JSON Editor tool, upload the *interaction_model.json* file, and then press the button `Save Model` first and the button `Build Model` second. You have now successfully built your custom skill. 
 
-3. To enable testying on your echo dot, select the button `Endpoint` from the left menu pane, and select the *HTTPS* endpoint type. This project uses *ngrok* to forward a localhost flask server running in ROS to a public HTTPS address accessible by the Alexa skill. In the *Default Region* text box, enter the *ngrok* domain name, for example *https://your-ngrok-subdomain.ngrok.io* and select the SSL option *My development endpoint is a sub-domain ...*. Select the botton `Save Endpoints`. 
+3. To enable testying on your echo dot, select the button `Endpoint` from the left menu pane, and select the *HTTPS* endpoint type. This project uses *ngrok* to forward a localhost flask server running in ROS to a public HTTPS address accessible by the Alexa skill. In the *Default Region* text box, enter the *ngrok* domain name, for example *https://your-ngrok-subdomain.ngrok.io* and select the SSL option *My development endpoint is a sub-domain ...*. Select the button `Save Endpoints`. 
 
 4. You are now ready to enable testing: select the `Test` tab at the top menu bar. At the top of the screen, toggle on the `Test is disabled for this skill` switch. You are now all set up to use Alexa to control the Image Caption Machine.
 
